@@ -1,15 +1,17 @@
 import Layout from "./components/layout/layout";
-import FeatureSection from "./components/sections/FeatureSection";
-import { WelcomeSection } from "./components/sections/WelcomeSection";
-import { ContactSection } from "./components/sections/ContactSection";
-import { HeroSection } from "./components/sections/HeroSection";
+import FeatureSection from "./components/sections/home/FeatureSection";
+import { HeroSection } from "./components/sections/home/HeroSection";
+import TestimonialsSection from "./components/sections/home/TestimonialsSection";
+import SubscriptionPromoSection from "./components/sections/home/SubscriptionPromoSection";
+import MenuHighlightSection from "./components/sections/home/MenuHighlightSection";
 export default function HomePage() {
   return (
     <Layout>
-      <WelcomeSection />
       <HeroSection />
+      <MenuHighlightSection />
+      <SubscriptionPromoSection />
       <FeatureSection />
-      <ContactSection />
+      <TestimonialsSection />
     </Layout>
   );
 }
