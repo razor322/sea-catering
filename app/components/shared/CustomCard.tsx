@@ -1,6 +1,6 @@
 // components/CustomCard.tsx
 
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 type CustomCardProps = {
   title: string;
