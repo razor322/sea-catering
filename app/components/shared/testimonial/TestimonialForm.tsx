@@ -7,9 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { CheckCircle } from "lucide-react";
-import ImageWithSpinner from "../ImageWithSpinner";
 import { Assets } from "@/app/constants/asset_const";
-
+import Image from "next/image";
 // Schema validasi
 const formSchema = z.object({
   name: z.string().min(2, "Nama minimal 2 huruf").max(30),
@@ -71,12 +70,13 @@ export default function TestimonialForm() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="flex justify-center">
             <div className="text-center">
-              <ImageWithSpinner
+              <Image
                 src={Assets.images.feedback}
                 alt="Testimonial"
                 width={300}
                 height={300}
               />
+
               <h3 className="text-xl font-semibold">Bagikan Pengalamanmu</h3>
               <p className="text-sm text-gray-500">
                 Kami sangat menghargai masukan dari kamu!

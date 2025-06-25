@@ -1,5 +1,6 @@
 import React from "react";
 import { Assets } from "@/app/constants/asset_const";
+// import Image from "next/image";
 import ImageWithSpinner from "../../shared/ImageWithSpinner";
 export const HeroSection = () => {
   return (
@@ -23,7 +24,7 @@ export const HeroSection = () => {
             </a>
           </div>
 
-          <div className="relative rounded-xl  overflow-hidden max-w-md mx-auto">
+          <div className="relative rounded-xl overflow-hidden max-w-md mx-auto">
             <ImageWithSpinner
               src={Assets.illustrations.hero}
               alt="Healthy meal"
@@ -31,14 +32,6 @@ export const HeroSection = () => {
               width={600}
               height={400}
             />
-
-            {/* <img
-              src={Assets.illustrations.hero}
-              alt="Healthy meal"
-              className="w-full rounded-xl object-cover h-[320px] mx-auto px-4 sm:px-4 lg:px-8"
-              width={600}
-              height={400}
-            /> */}
           </div>
         </div>
       </section>
