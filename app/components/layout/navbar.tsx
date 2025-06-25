@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
+import { Button } from "@/components/ui/button";
 const navLinks = [
   { href: "/menu", label: "Menu" },
   { href: "/subscription", label: "Subscription" },
@@ -43,6 +44,18 @@ export function Navbar() {
                 </Link>
               );
             })}
+            <Button
+              asChild
+              className="hidden md:inline-block bg-green-600 hover:bg-green-700 text-white ml-4"
+            >
+              <Link href="/login">Login</Link>
+            </Button>
+            <Button
+              asChild
+              className="hidden md:inline-block bg-gray-100 hover:bg-gray-200 text-gray-900"
+            >
+              <Link href="/register">Register</Link>
+            </Button>
           </nav>
 
           {/* Tombol Hamburger untuk Mobile (tersembunyi di desktop) */}
@@ -85,6 +98,24 @@ export function Navbar() {
                 </Link>
               );
             })}
+
+            {/* Tambahkan Login dan Register Button di Mobile */}
+            <div className="px-3 pt-3 space-y-2">
+              <Link
+                href="/login"
+                onClick={() => setIsMenuOpen(false)}
+                className="block w-full text-center rounded-md bg-green-600 text-white py-2 font-semibold hover:bg-green-700"
+              >
+                Login
+              </Link>
+              <Link
+                href="/register"
+                onClick={() => setIsMenuOpen(false)}
+                className="block w-full text-center rounded-md bg-gray-100 text-gray-900 py-2 font-semibold hover:bg-gray-200"
+              >
+                Register
+              </Link>
+            </div>
           </nav>
         </div>
       )}
