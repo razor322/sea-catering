@@ -123,7 +123,10 @@ export default function TestimonialForm() {
                 <p className="text-sm text-red-500">{errors.rating}</p>
               )}
 
-              <Button type="submit" className="w-full">
+              <Button
+                type="submit"
+                className="w-full bg-green-600 hover:bg-green-700/90"
+              >
                 Kirim Testimoni
               </Button>
             </form>
