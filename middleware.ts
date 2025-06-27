@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
+import { verifyToken } from "@/app/lib/auth/verifyToken";
 
-export function middleware(req: NextRequest) {
+export async function middleware(req: NextRequest) {
   const token = req.cookies.get("token")?.value;
 
   const protectedRoutes = ["/dashboard", "/admin"];
@@ -11,10 +11,9 @@ export function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL("/login", req.url));
     }
 
-    try {
-      jwt.verify(token, process.env.JWT_SECRET!);
-    } catch (error) {
-      console.error("Token verification failed:", error);
+    const { valid } = await verifyToken(token);
+
+    if (!valid) {
       return NextResponse.redirect(new URL("/login", req.url));
     }
   }
