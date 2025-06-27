@@ -4,10 +4,14 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+// generator client {
+//   provider = "prisma-client-js"
+//   output   = "../lib/generated/prisma"
+// }
 generator client {
   provider = "prisma-client-js"
-  output   = "../lib/generated/prisma"
 }
+
 
 datasource db {
   provider = "postgresql"
@@ -34,6 +38,8 @@ model Subscription {
   meals     String[]
   days      String[]
   allergies String?
+  phone     String  
+  name      String  
   total     Int
   status    SubscriptionStatus @default(ACTIVE)
   createdAt DateTime @default(now())
