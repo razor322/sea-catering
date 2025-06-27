@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { hash } from "bcryptjs";
-
 import { z } from "zod";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 const registerSchema = z.object({
   name: z.string().min(2),
   email: z.string().email(),
@@ -20,6 +19,7 @@ const registerSchema = z.object({
 export async function POST(req: NextRequest) {
   const body = await req.json();
   const result = registerSchema.safeParse(body);
+  console.log("Data dari frontend:", body);
 
   if (!result.success) {
     return NextResponse.json({ error: result.error.format() }, { status: 400 });
