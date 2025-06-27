@@ -31,7 +31,7 @@ export default function SubscriptionPromoSection() {
         </div>
 
         <Link href="/subscription">
-          <Button className="mt-4 px-6 py-3 text-lg">
+          <Button className="mt-4 px-6 py-3 text-lg bg-green-600 hover:bg-green-700/90">
             Coba Langganan Sekarang
           </Button>
         </Link>

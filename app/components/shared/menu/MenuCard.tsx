@@ -26,7 +26,10 @@ export default function MealPlanCard({
       <h3 className="text-lg font-semibold">{name}</h3>
       <p className="text-sm text-gray-600">{price}</p>
       <p className="mt-2 text-sm">{description}</p>
-      <Button className="mt-4" onClick={onSeeMore}>
+      <Button
+        className="mt-4 bg-green-600 hover:bg-green-700/90"
+        onClick={onSeeMore}
+      >
         Lihat Detail
       </Button>
     </div>

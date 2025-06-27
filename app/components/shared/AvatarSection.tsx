@@ -24,7 +24,7 @@ export default function AvatarSection() {
       </div>
       <p className="text-sm md:text-base text-gray-700 font-medium">
         Trusted by <span className="font-bold">5,000+</span>
-        Pelanggan Puas
+        Pelanggan
       </p>
     </div>
   );

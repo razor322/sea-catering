@@ -18,7 +18,7 @@ export const HeroSection = () => {
             </p>
             <a
               href="/menu"
-              className="inline-block bg-primary text-white px-6 py-3 rounded-lg text-sm font-semibold shadow hover:bg-primary/90 transition"
+              className="inline-block bg-green-600 text-white px-6 py-3 rounded-lg text-sm font-semibold shadow hover:bg-green-600/90 transition "
             >
               Lihat Menu
             </a>

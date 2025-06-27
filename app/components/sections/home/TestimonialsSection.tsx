@@ -24,7 +24,9 @@ export default function TestimonialsSection() {
           Pilih paket favoritmu dan mulai berlangganan sekarang!
         </p>
         <Link href="/subscription">
-          <Button>Mulai Langganan</Button>
+          <Button className="bg-green-600 hover:bg-green-700/90">
+            Mulai Langganan
+          </Button>
         </Link>
       </section>
     </section>

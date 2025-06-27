@@ -33,8 +33,12 @@ export default function ContactSection() {
         <Input placeholder="Nama" />
         <Input type="email" placeholder="Email" />
         <Textarea placeholder="Pesan kamu..." rows={5} />
-        <div className="text-right">
-          <Button>Kirim Pesan</Button>
+        <div className="text-right ">
+          <center>
+            <Button className="bg-green-600 hover:bg-green-700/90">
+              Kirim Pesan
+            </Button>
+          </center>
         </div>
       </motion.form>
       <section className="mt-12 py-12 bg-green-100 text-center rounded-2xl">
@@ -42,7 +46,9 @@ export default function ContactSection() {
         <p className="text-gray-700 mb-4">
           Pilih paket favoritmu dan mulai berlangganan sekarang!
         </p>
-        <Button>Mulai Langganan</Button>
+        <Button className="bg-green-600 hover:bg-green-700/90">
+          Mulai Langganan
+        </Button>
       </section>
     </section>
   );

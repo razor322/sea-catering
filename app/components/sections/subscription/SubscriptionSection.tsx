@@ -9,11 +9,12 @@ import { PLANS } from "@/app/constants/string_const";
 import { PlanType } from "@/app/lib/subscription/calculate";
 import { JSX } from "react/jsx-runtime";
 import SubscriptionConfirmModal from "../../shared/subscription/SubscriptionConfirmModal";
+// import { useRouter } from "next/navigation";
 
 export default function SubscriptionPlans() {
   const [selectedPlan, setSelectedPlan] = useState<PlanType | null>(null);
   const [openModal, setOpenModal] = useState(false);
-
+  // const router = useRouter();
   const handleSelect = (plan: PlanType) => {
     setSelectedPlan(plan);
     setOpenModal(true);
@@ -60,7 +61,7 @@ export default function SubscriptionPlans() {
                 </p>
               </div>
               <Button
-                className="mt-4 w-full"
+                className="mt-4 w-full bg-green-600 hover:bg-green-700/90"
                 onClick={() => handleSelect(plan.name as PlanType)}
               >
                 Pilih Plan
@@ -69,11 +70,22 @@ export default function SubscriptionPlans() {
           ))}
         </div>
       </div>
+      {/* {selectedPlan && (
+        <SubscriptionConfirmModal
+          open={openModal}
+          onClose={() => setOpenModal(false)}
+          selectedPlan={selectedPlan}
+        />
+      )} */}
       {selectedPlan && (
         <SubscriptionConfirmModal
           open={openModal}
           onClose={() => setOpenModal(false)}
           selectedPlan={selectedPlan}
+          // onSuccess={() => {
+          //   router.refresh(); // Refresh page
+          //   setOpenModal(false); // Tutup modal
+          // }}
         />
       )}
     </section>
