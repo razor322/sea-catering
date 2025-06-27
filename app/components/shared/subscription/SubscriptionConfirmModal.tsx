@@ -53,6 +53,7 @@ export default function SubscriptionConfirmModal({
   const [form, setForm] = useState({
     name: "",
     phone: "",
+    plan: "",
     meals: [] as string[],
     days: [] as string[],
     allergies: "",
@@ -74,6 +75,7 @@ export default function SubscriptionConfirmModal({
     setForm({
       name: "",
       phone: "",
+      plan: "",
       meals: [],
       days: [],
       allergies: "",
@@ -89,7 +91,7 @@ export default function SubscriptionConfirmModal({
       .replace(/\"/g, "&quot;")
       .replace(/'/g, "&#039;");
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const result = schema.safeParse(form);
     if (!result.success) {
       const newErrors: Record<string, string> = {};
@@ -104,9 +106,36 @@ export default function SubscriptionConfirmModal({
       name: escapeHtml(form.name),
       phone: escapeHtml(form.phone),
       allergies: escapeHtml(form.allergies || ""),
+      plan: selectedPlan,
       meals: form.meals,
       days: form.days,
+      total: totalPrice,
     };
+
+    try {
+      const res = await fetch("/api/subscription", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(sanitizedForm),
+        credentials: "include",
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        toast.error("Gagal membuat langganan", {
+          description: data?.error || "Terjadi kesalahan",
+        });
+        return;
+      } else {
+        toast.success("Langganan berhasil dibuat!");
+      }
+    } catch (error) {
+      console.error("Error submitting subscription:", error);
+      toast.error("Gagal mengirim langganan", {
+        description: "Terjadi kesalahan, silakan coba lagi",
+      });
+      return;
+    }
     console.log("Submit Subscription", { ...sanitizedForm, selectedPlan });
     toast.success("Langganan berhasil dikirim!", {
       description: "Terima kasih telah berlangganan 🙌",
@@ -135,8 +164,7 @@ export default function SubscriptionConfirmModal({
           <p className="text-center text-sm text-gray-500 mt-1">
             Plan yang dipilih:{" "}
             <strong>
-              {selectedPlan.charAt(0).toUpperCase() + selectedPlan.slice(1)}{" "}
-              Plan
+              {selectedPlan.charAt(0).toUpperCase() + selectedPlan.slice(1)}
             </strong>
           </p>
         </DialogHeader>
@@ -242,7 +270,12 @@ export default function SubscriptionConfirmModal({
             >
               Cancel
             </Button>
-            <Button onClick={handleSubmit}>Kirim</Button>
+            <Button
+              className="bg-green-600 hover:bg-green-700/90"
+              onClick={handleSubmit}
+            >
+              Kirim
+            </Button>
           </DialogFooter>
         </div>
       </DialogContent>
