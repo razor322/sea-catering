@@ -17,6 +17,34 @@ export default function UserDashboard() {
     fetcher
   );
   const [loadingId, setLoadingId] = useState<string | null>(null);
+  const getStatusStyles = (status: string) => {
+    switch (status) {
+      case "ACTIVE":
+        return {
+          label: "Aktif",
+          color: "bg-green-100 text-green-800",
+          dot: "bg-green-500",
+        };
+      case "PAUSED":
+        return {
+          label: "Dijeda",
+          color: "bg-yellow-100 text-yellow-800",
+          dot: "bg-yellow-500",
+        };
+      case "CANCELLED":
+        return {
+          label: "Dibatalkan",
+          color: "bg-red-100 text-red-800",
+          dot: "bg-red-500",
+        };
+      default:
+        return {
+          label: "Tidak Diketahui",
+          color: "bg-gray-100 text-gray-800",
+          dot: "bg-gray-500",
+        };
+    }
+  };
 
   const handlePause = async (id: string) => {
     setLoadingId(id);
@@ -26,6 +54,18 @@ export default function UserDashboard() {
       toast.success("Berlangganan dijeda");
     } catch {
       toast.error("Gagal menjeda langganan");
+    } finally {
+      setLoadingId(null);
+    }
+  };
+  const handleUnPause = async (id: string) => {
+    setLoadingId(id);
+    try {
+      await axios.put("/api/subscription/unpause", { id });
+      mutate();
+      toast.success("Berlangganan diakifkan");
+    } catch {
+      toast.error("Gagal mengaktifkan langganan");
     } finally {
       setLoadingId(null);
     }
@@ -68,48 +108,77 @@ export default function UserDashboard() {
           Kamu belum memiliki langganan
         </div>
       ) : (
-        <div className="space-y-4">
-          {data.map((sub: any) => (
-            <Card key={sub.id} className="shadow-md">
-              <CardHeader>
-                <CardTitle>{sub.plan}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p>
-                  <strong>Jenis Makanan:</strong> {sub.meals.join(", ")}
-                </p>
-                <p>
-                  <strong>Alergi:</strong> {sub.allergies || "Tidak ada"}
-                </p>
-                <p>
-                  <strong>Hari Pengiriman:</strong> {sub.days.join(", ")}
-                </p>
-                <p>
-                  <strong>Total Harga:</strong> Rp
-                  {sub.total.toLocaleString("id-ID")}
-                </p>
-                <p>
-                  <strong>Status:</strong> {sub.status}
-                </p>
-                <div className="flex gap-2 mt-4">
-                  <Button
-                    variant="outline"
-                    disabled={loadingId === sub.id || sub.status !== "ACTIVE"}
-                    onClick={() => handlePause(sub.id)}
+        <div className="space-y-6">
+          {data.map((sub: any) => {
+            const status = getStatusStyles(sub.status);
+            return (
+              <Card key={sub.id} className="shadow-md relative">
+                {/* Status Badge */}
+                <div className="absolute top-4 right-4">
+                  <div
+                    className={`flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium ${status.color}`}
                   >
-                    {loadingId === sub.id ? "Menjeda..." : "Jeda"}
-                  </Button>
-                  <Button
-                    variant="destructive"
-                    disabled={loadingId === sub.id}
-                    onClick={() => handleCancel(sub.id)}
-                  >
-                    {loadingId === sub.id ? "Membatalkan..." : "Batalkan"}
-                  </Button>
+                    <span className={`w-2 h-2 rounded-full ${status.dot}`} />
+                    {status.label}
+                  </div>
                 </div>
-              </CardContent>
-            </Card>
-          ))}
+
+                <CardHeader>
+                  <CardTitle className="text-lg font-bold">
+                    {sub.plan}
+                  </CardTitle>
+                </CardHeader>
+
+                <CardContent className="space-y-2 text-sm text-gray-700">
+                  <p>
+                    <strong>Jenis Makanan:</strong> {sub.meals.join(", ")}
+                  </p>
+                  <p>
+                    <strong>Alergi:</strong> {sub.allergies || "Tidak ada"}
+                  </p>
+                  <p>
+                    <strong>Hari Pengiriman:</strong> {sub.days.join(", ")}
+                  </p>
+                  <p>
+                    <strong>Total Harga:</strong> Rp
+                    {sub.total.toLocaleString("id-ID")}
+                  </p>
+
+                  {/* Action Buttons */}
+                  <div className="flex gap-2 pt-4">
+                    {sub.status === "ACTIVE" && (
+                      <>
+                        <Button
+                          variant="outline"
+                          disabled={loadingId === sub.id}
+                          onClick={() => handlePause(sub.id)}
+                        >
+                          {loadingId === sub.id ? "Menjeda..." : "Jeda"}
+                        </Button>
+                        <Button
+                          variant="destructive"
+                          disabled={loadingId === sub.id}
+                          onClick={() => handleCancel(sub.id)}
+                        >
+                          {loadingId === sub.id ? "Membatalkan..." : "Batalkan"}
+                        </Button>
+                      </>
+                    )}
+
+                    {sub.status === "PAUSED" && (
+                      <Button
+                        variant="outline"
+                        disabled={loadingId === sub.id}
+                        onClick={() => handleUnPause(sub.id)}
+                      >
+                        {loadingId === sub.id ? "Mengaktifkan..." : "Aktifkan"}
+                      </Button>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       )}
     </div>
