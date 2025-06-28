@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import { Button } from "@/components/ui/button";
@@ -14,44 +14,55 @@ import {
   DialogHeader,
   DialogFooter,
 } from "@/components/ui/dialog";
+import { useUserStore } from "@/app/lib/store/userStore";
+import { useHydrateUser } from "@/app/lib/hooks/useHydrateUser";
 
-const navLinks = [
-  { href: "/menu", label: "Menu" },
-  { href: "/subscription", label: "Subscription" },
-  { href: "/contact", label: "Contact Us" },
-  { href: "/dashboard", label: "Dashboard" },
-];
-type User = {
-  id: string;
-  name: string;
-  email: string;
-};
+// const navLinks = [
+//   { href: "/menu", label: "Menu" },
+//   { href: "/subscription", label: "Subscription" },
+//   { href: "/contact", label: "Contact Us" },
+//   { href: "/dashboard", label: "Dashboard" },
+// ];
 
 export function Navbar() {
+  useHydrateUser();
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
   const pathname = usePathname();
 
-  useEffect(() => {
-    async function fetchUser() {
-      try {
-        const res = await axios.get("/api/profile");
-        setUser(res.data);
-      } catch (err) {
-        if (axios.isAxiosError(err) && err.response?.status === 401) {
-          // User belum login
-          console.warn("User belum login");
-          setUser(null);
-        } else {
-          console.error("Failed to fetch user:", err);
-          setUser(null);
-        }
-      }
-    }
-    fetchUser();
-  }, []);
+  const userName = useUserStore((state) => state.user);
+  const role = useUserStore((state) => state.user?.role);
+
+  const navLinks = useMemo(() => {
+    return [
+      { href: "/menu", label: "Menu" },
+      { href: "/subscription", label: "Subscription" },
+      { href: "/contact", label: "Contact Us" },
+      {
+        href: role === "ADMIN" ? "/admin" : "/dashboard",
+        label: "Dashboard",
+      },
+    ];
+  }, [role]);
+  // useEffect(() => {
+  //   async function fetchUser() {
+  //     try {
+  //       const res = await axios.get("/api/profile");
+  //       setUser(res.data);
+  //     } catch (err) {
+  //       if (axios.isAxiosError(err) && err.response?.status === 401) {
+  //         // User belum login
+  //         console.warn("User belum login");
+  //         setUser(null);
+  //       } else {
+  //         console.error("Failed to fetch user:", err);
+  //         setUser(null);
+  //       }
+  //     }
+  //   }
+  //   fetchUser();
+  // }, []);
 
   const handleLogout = async () => {
     await axios.post("/api/auth/logout");
@@ -89,9 +100,11 @@ export function Navbar() {
                 );
               })}
 
-              {user ? (
+              {userName ? (
                 <>
-                  <span className="text-sm text-gray-700">Hi, {user.name}</span>
+                  <span className="text-sm text-gray-700">
+                    Hi, {userName.name}
+                  </span>
                   <Button
                     className=" bg-green-600 hover:bg-green-700 text-white"
                     onClick={() => setIsModalOpen(true)}

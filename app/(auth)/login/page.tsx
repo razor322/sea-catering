@@ -6,8 +6,10 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import axios from "axios";
+import { useUserStore } from "@/app/lib/store/userStore";
 export default function LoginPage() {
   const router = useRouter();
+  const setUser = useUserStore((state) => state.setUser);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -15,7 +17,9 @@ export default function LoginPage() {
   async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
-      await axios.post("/api/auth/login", { email, password });
+      const res = await axios.post("/api/auth/login", { email, password });
+      const user = res.data.user;
+      setUser(user);
       router.push("/");
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
