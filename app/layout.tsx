@@ -2,8 +2,6 @@
 
 import "./globals.css";
 import { Inter } from "next/font/google";
-// import { useEffect } from "react";
-// import { useUserStore } from "./lib/store/userStore";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,24 +12,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // const setUser = useUserStore((state) => state.setUser);
-
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     try {
-  //       const res = await fetch("/api/profile");
-  //       if (res.ok) {
-  //         const user = await res.json();
-  //         setUser(user);
-  //       }
-  //     } catch (error) {
-  //       console.error("Gagal memuat user", error);
-  //     }
-  //   };
-
-  //   fetchUser();
-  // }, [setUser]);
-
   return (
     <html lang="en">
       <head>
