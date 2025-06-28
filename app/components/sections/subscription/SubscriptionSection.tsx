@@ -9,13 +9,29 @@ import { PLANS } from "@/app/constants/string_const";
 import { PlanType } from "@/app/lib/subscription/calculate";
 import { JSX } from "react/jsx-runtime";
 import SubscriptionConfirmModal from "../../shared/subscription/SubscriptionConfirmModal";
+import { useRouter } from "next/navigation";
+import { useUserStore } from "@/app/lib/store/userStore";
+import { toast } from "sonner";
 // import { useRouter } from "next/navigation";
 
 export default function SubscriptionPlans() {
   const [selectedPlan, setSelectedPlan] = useState<PlanType | null>(null);
   const [openModal, setOpenModal] = useState(false);
-  // const router = useRouter();
+  const user = useUserStore((state) => state.user);
+  const router = useRouter();
+
   const handleSelect = (plan: PlanType) => {
+    if (!user) {
+      toast.warning("Silakan login terlebih dahulu untuk memilih paket", {
+        duration: 2000,
+      });
+
+      setTimeout(() => {
+        router.push("/login");
+      }, 1500);
+      return;
+    }
+
     setSelectedPlan(plan);
     setOpenModal(true);
   };
@@ -70,22 +86,12 @@ export default function SubscriptionPlans() {
           ))}
         </div>
       </div>
-      {/* {selectedPlan && (
-        <SubscriptionConfirmModal
-          open={openModal}
-          onClose={() => setOpenModal(false)}
-          selectedPlan={selectedPlan}
-        />
-      )} */}
+
       {selectedPlan && (
         <SubscriptionConfirmModal
           open={openModal}
           onClose={() => setOpenModal(false)}
           selectedPlan={selectedPlan}
-          // onSuccess={() => {
-          //   router.refresh(); // Refresh page
-          //   setOpenModal(false); // Tutup modal
-          // }}
         />
       )}
     </section>

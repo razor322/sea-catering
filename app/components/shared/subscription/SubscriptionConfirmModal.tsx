@@ -126,8 +126,6 @@ export default function SubscriptionConfirmModal({
           description: data?.error || "Terjadi kesalahan",
         });
         return;
-      } else {
-        toast.success("Langganan berhasil dibuat!");
       }
     } catch (error) {
       console.error("Error submitting subscription:", error);
