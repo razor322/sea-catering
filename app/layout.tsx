@@ -1,21 +1,37 @@
-// app/layout.tsx
+"use client";
 
 import "./globals.css";
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+// import { useEffect } from "react";
+// import { useUserStore } from "./lib/store/userStore";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "SEA Catering",
-  description: "Custom healthy meals delivered across Indonesia",
-};
+//
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // const setUser = useUserStore((state) => state.setUser);
+
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     try {
+  //       const res = await fetch("/api/profile");
+  //       if (res.ok) {
+  //         const user = await res.json();
+  //         setUser(user);
+  //       }
+  //     } catch (error) {
+  //       console.error("Gagal memuat user", error);
+  //     }
+  //   };
+
+  //   fetchUser();
+  // }, [setUser]);
+
   return (
     <html lang="en">
       <head>
