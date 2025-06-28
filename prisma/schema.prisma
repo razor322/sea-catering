@@ -25,9 +25,8 @@ model User {
   role      Role     @default(USER)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
   subscriptions Subscription[]
-  testimonials  Testimonial[]
+
 }
 
 model Subscription {
@@ -46,11 +45,13 @@ model Subscription {
 }
 
 model Testimonial {
-  id        String   @id @default(uuid())
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
-  message   String
-  createdAt DateTime @default(now())
+  id          String   @id @default(cuid())
+  name        String
+  location    String
+  plan        String
+  rating      Int
+  experience  String
+  createdAt   DateTime @default(now())
 }
 
 enum Role {
