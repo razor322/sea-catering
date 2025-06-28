@@ -69,7 +69,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Password salah" }, { status: 401 });
   }
 
-  const token = await signToken({ userId: user.id, role: user.role });
+  const token = await signToken({
+    userId: user.id,
+    role: user.role.toUpperCase(),
+  });
 
   const res = NextResponse.json({
     token,

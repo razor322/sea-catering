@@ -45,7 +45,7 @@ export async function GET(req: NextRequest) {
     const user = await prisma.user.findUnique({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       where: { id: (payload as any).userId },
-      select: { id: true, name: true, email: true },
+      select: { id: true, name: true, email: true, role: true },
     });
 
     if (!user) {
