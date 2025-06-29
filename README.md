@@ -126,13 +126,13 @@ SEA Catering is a customizable healthy meal service delivering across Indonesia.
 
 #### Admin Account
 
-- **Email**: admin@seacatering.com
+- **Email**: admin@example.com
 - **Password**: Admin@123
 
 #### User/Customer Account
 
-- **Email**: user@example.com
-- **Password**: User@123
+- **Email**: nana@example.com
+- **Password**: Nana@1234
 
 ---
 
