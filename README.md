@@ -163,7 +163,9 @@ npm run build
 
 ```bash
 npx prisma migrate reset
-npm run prisma:migrate:dev
+npx prisma migrate dev
+npx prisma generate
+npm run seed
 ```
 
 ---
