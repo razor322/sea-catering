@@ -172,22 +172,37 @@ export function Navbar() {
               })}
 
               {/* Tambahkan Login dan Register Button di Mobile */}
-              <div className="px-3 pt-3 space-y-2">
-                <Link
-                  href="/login"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="block w-full text-center rounded-md bg-green-600 text-white py-2 font-semibold hover:bg-green-700"
-                >
-                  Login
-                </Link>
-                <Link
-                  href="/register"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="block w-full text-center rounded-md bg-gray-100 text-gray-900 py-2 font-semibold hover:bg-gray-200"
-                >
-                  Register
-                </Link>
-              </div>
+
+              {userName ? (
+                <>
+                  <span className="block rounded-md px-3 py-2 text-base font-medium text-green-700">
+                    Hi, {userName.name}
+                  </span>
+                  <Button
+                    className="block w-full text-center rounded-md bg-green-600 text-white py-2 font-semibold hover:bg-green-700"
+                    onClick={() => setIsModalOpen(true)}
+                  >
+                    Logout
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block w-full text-center rounded-md bg-green-600 text-white py-2 font-semibold hover:bg-green-700"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    href="/register"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block w-full text-center rounded-md bg-gray-100 text-gray-900 py-2 font-semibold hover:bg-gray-200"
+                  >
+                    Register
+                  </Link>
+                </>
+              )}
             </nav>
           </div>
         )}
